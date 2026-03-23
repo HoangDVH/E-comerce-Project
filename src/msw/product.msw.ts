@@ -1,4 +1,4 @@
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 import config from 'src/constants/config'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 
@@ -239,13 +239,24 @@ const productDetailRes = {
     updatedAt: '2022-12-19T15:19:53.312Z'
   }
 }
-const productsRequest = rest.get(`${config.baseUrl}products`, (req, res, ctx) => {
-  return res(ctx.status(HttpStatusCode.Ok), ctx.json(productsRes))
-})
-const productDetailRequest = rest.get(`${config.baseUrl}products/:id`, (req, res, ctx) => {
-  return res(ctx.status(HttpStatusCode.Ok), ctx.json(productDetailRes))
+
+// ===== HANDLERS =====
+const productsRequest = http.get(`${config.baseUrl}products`, () => {
+  return HttpResponse.json(productsRes, {
+    status: HttpStatusCode.Ok
+  })
 })
 
+const productDetailRequest = http.get(`${config.baseUrl}products/:id`, ({ params }) => {
+  // nếu muốn dùng id:
+  // const { id } = params
+
+  return HttpResponse.json(productDetailRes, {
+    status: HttpStatusCode.Ok
+  })
+})
+
+// ===== EXPORT =====
 const productRequests = [productsRequest, productDetailRequest]
 
 export default productRequests
