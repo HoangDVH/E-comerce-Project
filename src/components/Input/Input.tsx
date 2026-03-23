@@ -6,9 +6,8 @@ interface Props<TFieldValues extends FieldValues> extends InputHTMLAttributes<HT
   classNameInput?: string
   classNameError?: string
   classNameEye?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register?: UseFormRegister<TFieldValues>
-  rules?: RegisterOptions
+  rules?: RegisterOptions<TFieldValues, FieldPath<TFieldValues>> // ✅ fix ở đây
   name: FieldPath<TFieldValues>
 }
 

@@ -46,3 +46,4 @@ const refreshTokenRequest = http.post(`${config.baseUrl}refresh-access-token`, a
 const authRequests = [loginRequest, refreshTokenRequest]
 
 export default authRequests
+export const access_token_1s = 'Bearer ...'
