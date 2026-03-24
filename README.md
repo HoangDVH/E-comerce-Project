@@ -1,4 +1,4 @@
-📌 Overview
+## 📌 Overview
 
 A full-featured e-commerce web application inspired by Shopee, built with modern frontend technologies.
 This project focuses on performance, scalability, and user experience, simulating a real-world online shopping platform.
@@ -6,14 +6,18 @@ This project focuses on performance, scalability, and user experience, simulatin
 
 
 
+---
 
-👨‍💻 Project Information
+## 👨‍💻 Project Information
 
-Role: Frontend Developer
+Role: Frontend Developer 
+
 Team size: 1 (Solo Project)
 
 
-🚀 Features
+---
+
+## 🚀 Features
 
 🔐 Authentication
 JWT-based authentication
@@ -38,20 +42,45 @@ Upload avatar
 Change password
 Track order status
 
-⚙️ Tech Stack
-Category	Technology
-Frontend	ReactJS, TypeScript
-Styling	TailwindCSS, Headless UI
-State Management	React Query, Context API
-Form Handling	React Hook Form
-Routing	React Router
-Build Tool	Vite
-API	RESTful API
-Others	i18n (multi-language support)
 
 
-📸 Demo
+---
+
+## ⚙️ Tech Stack
+
+ReactJS, TypeScript
+TailwindCSS, Headless UI
+React Query, Context API
+React Hook Form
+React Router
+Vite
+RESTful API
+i18n
+
+
+
+---
+
+## 📸 Demo
 
 👉 Live Demo: https://e-comerce-shopp.vercel.app/
 
-👉 Screenshots: (add images here if needed)
+
+
+---
+
+## 🛠️ Installation & Setup
+
+```bash
+# Clone repository
+git clone https://github.com/your-username/shopee-clone.git
+
+# Navigate to project
+cd shopee-clone
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
