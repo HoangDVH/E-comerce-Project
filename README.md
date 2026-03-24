@@ -73,10 +73,10 @@ i18n
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/shopee-clone.git
+git clone https://github.com/your-username/E-comerce-Project.git
 
 # Navigate to project
-cd shopee-clone
+cd E-comerce-Project
 
 # Install dependencies
 npm install
