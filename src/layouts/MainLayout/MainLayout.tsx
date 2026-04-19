@@ -7,10 +7,12 @@ interface Props {
 }
 function MainLayoutInner({ children }: Props) {
   return (
-    <div>
+    <div className='flex min-h-screen flex-col bg-neutral-50'>
       <Header />
-      {children}
-      <Outlet />
+      <div className='flex-1'>
+        {children}
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )

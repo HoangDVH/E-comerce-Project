@@ -123,7 +123,7 @@ export default function ProductDetail() {
 
   if (!product) return null
   return (
-    <div className='bg-gray-200 py-6'>
+    <div className='bg-neutral-100 py-4 md:py-6'>
       <Helmet>
         <title>{product.name} | Shopee Clone</title>
         <meta
@@ -136,9 +136,9 @@ export default function ProductDetail() {
         />
       </Helmet>
       <div className='container'>
-        <div className='bg-white p-4 shadow'>
-          <div className='grid grid-cols-12 gap-9'>
-            <div className='col-span-5'>
+        <div className='rounded-xl bg-white p-4 shadow-card ring-1 ring-black/5 md:p-6'>
+          <div className='grid grid-cols-12 gap-6 md:gap-9'>
+            <div className='col-span-12 md:col-span-5'>
               <div
                 className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow'
                 onMouseMove={handleZoom}
@@ -151,7 +151,7 @@ export default function ProductDetail() {
                   ref={imageRef}
                 />
               </div>
-              <div className='relative mt-4 grid grid-cols-5 gap-1'>
+              <div className='relative mt-4 grid grid-cols-4 gap-1 sm:grid-cols-5'>
                 <button
                   className='absolute left-0 top-1/2 z-10 h-9 w-5 -translate-y-1/2 bg-black/20 text-white'
                   onClick={prev}
@@ -197,8 +197,8 @@ export default function ProductDetail() {
                 </button>
               </div>
             </div>
-            <div className='col-span-7'>
-              <h1 className='text-xl font-medium uppercase'>{product.name}</h1>
+            <div className='col-span-12 md:col-span-7'>
+              <h1 className='text-lg font-medium uppercase leading-snug sm:text-xl'>{product.name}</h1>
               <div className='mt-8 flex items-center'>
                 <div className='flex items-center'>
                   <span className='mr-1 border-b border-b-orange text-orange'>{product.rating}</span>
@@ -214,15 +214,15 @@ export default function ProductDetail() {
                   <span className='ml-1 text-gray-500'>Đã bán</span>
                 </div>
               </div>
-              <div className='mt-8 flex items-center bg-gray-50 px-5 py-4'>
+              <div className='mt-6 flex flex-wrap items-center gap-3 bg-neutral-50 px-4 py-4 md:mt-8 md:px-5'>
                 <div className='text-gray-500 line-through'>₫{formatCurrency(product.price_before_discount)}</div>
                 <div className='ml-3 text-3xl font-medium text-orange'>₫{formatCurrency(product.price)}</div>
                 <div className='ml-4 rounded-sm bg-orange px-1 py-[2px] text-xs font-semibold uppercase text-white'>
                   {rateSale(product.price_before_discount, product.price)} giảm
                 </div>
               </div>
-              <div className='mt-8 flex items-center'>
-                <div className='capitalize text-gray-500'>Số lượng</div>
+              <div className='mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center'>
+                <div className='shrink-0 capitalize text-gray-500'>Số lượng</div>
                 <QuantityController
                   onDecrease={handleBuyCount}
                   onIncrease={handleBuyCount}
@@ -230,14 +230,14 @@ export default function ProductDetail() {
                   value={buyCount}
                   max={product.quantity}
                 />
-                <div className='ml-6 text-sm text-gray-500'>
+                <div className='text-sm text-gray-500 sm:ml-6'>
                   {product.quantity} {t('product:available')}
                 </div>
               </div>
-              <div className='mt-8 flex items-center'>
+              <div className='mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center'>
                 <button
                   onClick={addToCart}
-                  className='flex h-12 items-center justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'
+                  className='flex h-11 w-full items-center justify-center rounded-md border border-orange bg-orange/10 px-4 capitalize text-orange shadow-sm hover:bg-orange/5 sm:h-12 sm:w-auto sm:min-w-[11rem] sm:px-5'
                 >
                   <svg
                     enableBackground='new 0 0 15 15'
@@ -266,7 +266,7 @@ export default function ProductDetail() {
                 </button>
                 <button
                   onClick={buyNow}
-                  className='fkex ml-4 h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'
+                  className='flex h-11 w-full min-w-[5rem] items-center justify-center rounded-md bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90 sm:h-12 sm:ml-4 sm:w-auto'
                 >
                   Mua ngay
                 </button>
@@ -277,8 +277,10 @@ export default function ProductDetail() {
       </div>
       <div className='mt-8'>
         <div className='container'>
-          <div className=' bg-white p-4 shadow'>
-            <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</div>
+          <div className='rounded-xl bg-white p-4 shadow-card ring-1 ring-black/5 md:p-6'>
+            <div className='rounded-lg bg-neutral-50 p-3 text-base font-medium capitalize text-slate-700 md:p-4 md:text-lg'>
+              Mô tả sản phẩm
+            </div>
             <div className='mx-4 mt-12 mb-4 text-sm leading-loose'>
               <div
                 dangerouslySetInnerHTML={{
@@ -292,7 +294,7 @@ export default function ProductDetail() {
 
       <div className='mt-8'>
         <div className='container'>
-          <div className='uppercase text-gray-400'>CÓ THỂ BẠN CŨNG THÍCH</div>
+          <div className='text-sm font-medium uppercase tracking-wide text-neutral-500'>CÓ THỂ BẠN CŨNG THÍCH</div>
           {productsData && (
             <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
               {productsData.data.data.products.map((product) => (

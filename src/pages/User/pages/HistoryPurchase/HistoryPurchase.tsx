@@ -37,53 +37,63 @@ export default function HistoryPurchase() {
           status: String(tab.status)
         }).toString()
       }}
-      className={classNames('flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center', {
-        'border-b-orange text-orange': status === tab.status,
-        'border-b-black/10 text-gray-900': status !== tab.status
-      })}
+      className={classNames(
+        'flex min-w-[6.5rem] shrink-0 flex-1 items-center justify-center whitespace-nowrap border-b-2 bg-white px-3 py-3 text-center text-sm sm:min-w-0 sm:px-4 sm:py-4 sm:text-base',
+        {
+          'border-b-orange font-medium text-orange': status === tab.status,
+          'border-b-transparent text-neutral-700 hover:text-orange': status !== tab.status
+        }
+      )}
     >
       {tab.name}
     </Link>
   ))
 
   return (
-    <div>
-      <div className='overflow-x-auto'>
-        <div className='min-w-[700px]'>
-          <div className='sticky top-0 flex rounded-t-sm shadow-sm'>{purchaseTabsLink}</div>
-          <div>
-            {purchasesInCart?.map((purchase) => (
-              <div key={purchase._id} className='mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm'>
-                <Link
-                  to={`${path.home}${generateNameId({ name: purchase.product.name, id: purchase.product._id })}`}
-                  className='flex'
-                >
-                  <div className='flex-shrink-0'>
-                    <img className='h-20 w-20 object-cover' src={purchase.product.image} alt={purchase.product.name} />
-                  </div>
-                  <div className='ml-3 flex-grow overflow-hidden'>
-                    <div className='truncate'>{purchase.product.name}</div>
-                    <div className='mt-3'>x{purchase.buy_count}</div>
-                  </div>
-                  <div className='ml-3 flex-shrink-0'>
-                    <span className='truncate text-gray-500 line-through'>
-                      ₫{formatCurrency(purchase.product.price_before_discount)}
-                    </span>
-                    <span className='ml-2 truncate text-orange'>₫{formatCurrency(purchase.product.price)}</span>
-                  </div>
-                </Link>
-                <div className='flex justify-end'>
-                  <div>
-                    <span>Tổng giá tiền</span>
-                    <span className='ml-4 text-xl text-orange'>
-                      ₫{formatCurrency(purchase.product.price * purchase.buy_count)}
-                    </span>
-                  </div>
+    <div className='overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-card'>
+      <div className='sticky top-0 z-[1] -mx-px flex overflow-x-auto border-b border-neutral-100 bg-white shadow-sm [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 [&::-webkit-scrollbar]:hidden'>
+        {purchaseTabsLink}
+      </div>
+      <div className='p-3 sm:p-4 md:p-6'>
+        {purchasesInCart?.map((purchase) => (
+          <div
+            key={purchase._id}
+            className='mt-3 rounded-lg border border-neutral-100 bg-neutral-50/80 p-4 text-gray-800 first:mt-0 sm:p-5'
+          >
+            <Link
+              to={`${path.home}${generateNameId({ name: purchase.product.name, id: purchase.product._id })}`}
+              className='flex flex-col gap-3 sm:flex-row sm:items-start'
+            >
+              <div className='flex shrink-0 gap-3 sm:gap-4'>
+                <img
+                  className='h-20 w-20 rounded-md object-cover sm:h-24 sm:w-24'
+                  src={purchase.product.image}
+                  alt={purchase.product.name}
+                />
+                <div className='min-w-0 flex-1 sm:hidden'>
+                  <div className='line-clamp-2 font-medium'>{purchase.product.name}</div>
+                  <div className='mt-2 text-sm text-neutral-500'>x{purchase.buy_count}</div>
                 </div>
               </div>
-            ))}
+              <div className='hidden min-w-0 flex-1 overflow-hidden sm:block'>
+                <div className='truncate font-medium'>{purchase.product.name}</div>
+                <div className='mt-3 text-sm text-neutral-500'>x{purchase.buy_count}</div>
+              </div>
+              <div className='flex shrink-0 flex-col items-start gap-1 text-right sm:ml-auto sm:items-end'>
+                <span className='text-sm text-neutral-400 line-through'>
+                  ₫{formatCurrency(purchase.product.price_before_discount)}
+                </span>
+                <span className='text-lg font-medium text-orange'>₫{formatCurrency(purchase.product.price)}</span>
+              </div>
+            </Link>
+            <div className='mt-4 flex flex-col border-t border-neutral-200 pt-4 sm:flex-row sm:items-center sm:justify-end'>
+              <div className='text-sm text-neutral-600 sm:mr-4'>Tổng giá tiền</div>
+              <div className='text-xl font-semibold text-orange'>
+                ₫{formatCurrency(purchase.product.price * purchase.buy_count)}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   )

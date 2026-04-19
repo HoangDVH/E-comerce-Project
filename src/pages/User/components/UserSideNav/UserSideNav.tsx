@@ -9,8 +9,8 @@ export default function UserSideNav() {
   const { profile } = useContext(AppContext)
 
   return (
-    <div>
-      <div className='flex items-center border-b border-b-gray-200 py-4'>
+    <div className='rounded-xl border border-neutral-200 bg-white shadow-card md:sticky md:top-20 md:self-start'>
+      <div className='flex items-center border-b border-neutral-200 px-4 py-4'>
         <Link to={path.profile} className='h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10'>
           <img src={getAvatarUrl(profile?.avatar)} alt='' className='h-full w-full object-cover' />
         </Link>
@@ -34,14 +34,17 @@ export default function UserSideNav() {
           </Link>
         </div>
       </div>
-      <div className='mt-7'>
+      <nav className='flex gap-1 overflow-x-auto px-2 pb-3 [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col md:gap-0 md:overflow-visible md:border-t md:border-neutral-100 md:px-0 md:pb-2 md:pt-1 [&::-webkit-scrollbar]:hidden'>
         <NavLink
           to={path.profile}
           className={({ isActive }) =>
-            classNames('flex items-center capitalize  transition-colors', {
-              'text-orange': isActive,
-              'text-gray-600': !isActive
-            })
+            classNames(
+              'flex shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2.5 capitalize transition-colors md:rounded-none md:px-4 md:py-3',
+              {
+                'bg-orange/10 text-orange md:bg-transparent': isActive,
+                'text-gray-600 hover:bg-neutral-50 md:hover:bg-transparent': !isActive
+              }
+            )
           }
         >
           <div className='mr-3 h-[22px] w-[22px]'>
@@ -52,10 +55,13 @@ export default function UserSideNav() {
         <NavLink
           to={path.changePassword}
           className={({ isActive }) =>
-            classNames('mt-4 flex items-center capitalize transition-colors', {
-              'text-orange': isActive,
-              'text-gray-600': !isActive
-            })
+            classNames(
+              'flex shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2.5 capitalize transition-colors md:mt-0 md:rounded-none md:px-4 md:py-3',
+              {
+                'bg-orange/10 text-orange md:bg-transparent': isActive,
+                'text-gray-600 hover:bg-neutral-50 md:hover:bg-transparent': !isActive
+              }
+            )
           }
         >
           <div className='mr-3 h-[22px] w-[22px]'>
@@ -66,10 +72,13 @@ export default function UserSideNav() {
         <NavLink
           to={path.historyPurchase}
           className={({ isActive }) =>
-            classNames('mt-4 flex items-center  capitalize transition-colors', {
-              'text-orange': isActive,
-              'text-gray-600': !isActive
-            })
+            classNames(
+              'flex shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2.5 capitalize transition-colors md:mt-0 md:rounded-none md:px-4 md:py-3',
+              {
+                'bg-orange/10 text-orange md:bg-transparent': isActive,
+                'text-gray-600 hover:bg-neutral-50 md:hover:bg-transparent': !isActive
+              }
+            )
           }
         >
           <div className='mr-3 h-[22px] w-[22px]'>
@@ -77,7 +86,7 @@ export default function UserSideNav() {
           </div>
           Đơn mua
         </NavLink>
-      </div>
+      </nav>
     </div>
   )
 }

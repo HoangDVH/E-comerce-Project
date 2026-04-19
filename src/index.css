@@ -4,10 +4,24 @@
 
 html {
   height: 100%;
-  line-height: 1.2;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  min-height: 100%;
+  font-family:
+    'Helvetica Neue',
+    Helvetica,
+    'Segoe UI',
+    Arial,
+    sans-serif;
   font-weight: 400;
+  color: rgb(38 38 38);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100%;
 }

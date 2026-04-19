@@ -19,7 +19,6 @@ export default function NavHeader() {
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      console.log(111)
       setIsAuthenticated(false)
       setProfile(null)
       queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
@@ -35,7 +34,7 @@ export default function NavHeader() {
   }
 
   return (
-    <div className='flex justify-end'>
+    <div className='flex flex-wrap items-center justify-end gap-x-2 gap-y-1 text-sm md:gap-x-4 md:text-base'>
       <Popover
         className='flex cursor-pointer items-center py-1 hover:text-white/70'
         renderPopover={
@@ -79,7 +78,7 @@ export default function NavHeader() {
       </Popover>
       {isAuthenticated && (
         <Popover
-          className='ml-6 flex cursor-pointer items-center py-1 hover:text-white/70'
+          className='ml-1 flex max-w-full cursor-pointer items-center py-1 hover:text-white/70 md:ml-4'
           renderPopover={
             <div className='relative rounded-sm border border-gray-200 bg-white shadow-md'>
               <Link
@@ -106,16 +105,16 @@ export default function NavHeader() {
           <div className='mr-2 h-6 w-6 flex-shrink-0'>
             <img src={getAvatarUrl(profile?.avatar)} alt='avatar' className='h-full w-full rounded-full object-cover' />
           </div>
-          <div>{profile?.email}</div>
+          <div className='max-w-[10rem] truncate sm:max-w-[14rem] md:max-w-none'>{profile?.email}</div>
         </Popover>
       )}
       {!isAuthenticated && (
         <div className='flex items-center'>
-          <Link to={path.register} className='mx-3 capitalize hover:text-white/70'>
+          <Link to={path.register} className='px-2 capitalize hover:text-white/70 sm:px-3'>
             Đăng ký
           </Link>
-          <div className='h-4 border-r-[1px] border-r-white/40' />
-          <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
+          <div className='h-4 border-r border-white/40' />
+          <Link to={path.login} className='px-2 capitalize hover:text-white/70 sm:px-3'>
             Đăng nhập
           </Link>
         </div>

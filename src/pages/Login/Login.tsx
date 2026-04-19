@@ -54,16 +54,20 @@ export default function Login() {
   })
 
   return (
-    <div className='bg-orange'>
+    <div className='min-h-[calc(100vh-0px)] bg-[linear-gradient(165deg,#f53d2d_0%,#ff7337_45%,#fff5f3_45%,#fafafa_100%)]'>
       <Helmet>
         <title>Đăng nhập | Shopee Clone</title>
         <meta name='description' content='Đăng nhập vào dự án Shopee Clone' />
       </Helmet>
       <div className='container'>
-        <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10'>
+        <div className='grid grid-cols-1 py-10 sm:py-14 lg:grid-cols-5 lg:py-28 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
-            <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
-              <div className='text-2xl'>Đăng nhập</div>
+            <form
+              className='rounded-2xl border border-white/40 bg-white/95 p-6 shadow-card backdrop-blur-sm sm:p-10'
+              onSubmit={onSubmit}
+              noValidate
+            >
+              <div className='text-xl font-semibold text-neutral-800 sm:text-2xl'>Đăng nhập</div>
               <Input
                 name='email'
                 register={register}

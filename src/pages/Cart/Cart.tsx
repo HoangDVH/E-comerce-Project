@@ -143,13 +143,87 @@ export default function Cart() {
   }
 
   return (
-    <div className='bg-neutral-100 py-16'>
+    <div className='bg-neutral-100 py-8 md:py-16'>
       <div className='container'>
         {extendedPurchases.length > 0 ? (
           <>
-            <div className='overflow-auto'>
+            <div className='space-y-4 lg:hidden'>
+              {extendedPurchases.map((purchase, index) => (
+                <div
+                  key={`m-${purchase._id}`}
+                  className='rounded-xl border border-neutral-200 bg-white p-4 text-sm text-neutral-600 shadow-card'
+                >
+                  <div className='flex gap-3'>
+                    <input
+                      type='checkbox'
+                      className='mt-1 h-5 w-5 shrink-0 accent-orange'
+                      checked={purchase.checked}
+                      onChange={handleCheck(index)}
+                    />
+                    <Link
+                      className='h-24 w-24 shrink-0 overflow-hidden rounded-md bg-neutral-50'
+                      to={`${path.home}${generateNameId({
+                        name: purchase.product.name,
+                        id: purchase.product._id
+                      })}`}
+                    >
+                      <img alt={purchase.product.name} src={purchase.product.image} className='h-full w-full object-cover' />
+                    </Link>
+                    <div className='min-w-0 flex-1'>
+                      <Link
+                        to={`${path.home}${generateNameId({
+                          name: purchase.product.name,
+                          id: purchase.product._id
+                        })}`}
+                        className='line-clamp-2 font-medium text-neutral-900'
+                      >
+                        {purchase.product.name}
+                      </Link>
+                      <div className='mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1'>
+                        <span className='text-xs text-neutral-400 line-through'>
+                          ₫{formatCurrency(purchase.product.price_before_discount)}
+                        </span>
+                        <span className='text-orange'>₫{formatCurrency(purchase.product.price)}</span>
+                      </div>
+                      <div className='mt-4 flex flex-wrap items-center justify-between gap-3'>
+                        <QuantityController
+                          max={purchase.product.quantity}
+                          value={purchase.buy_count}
+                          classNameWrapper='flex items-center'
+                          onIncrease={(value) => handleQuantity(index, value, value <= purchase.product.quantity)}
+                          onDecrease={(value) => handleQuantity(index, value, value >= 1)}
+                          onType={handleTypeQuantity(index)}
+                          onFocusOut={(value) =>
+                            handleQuantity(
+                              index,
+                              value,
+                              value >= 1 &&
+                                value <= purchase.product.quantity &&
+                                value !== (purchasesInCart as Purchase[])[index].buy_count
+                            )
+                          }
+                          disabled={purchase.disabled}
+                        />
+                        <button
+                          type='button'
+                          onClick={handleDelete(index)}
+                          className='text-sm font-medium text-orange underline-offset-2 hover:text-orange/90 hover:underline'
+                        >
+                          Xóa
+                        </button>
+                      </div>
+                      <div className='mt-3 flex justify-end border-t border-neutral-100 pt-3 text-base font-semibold text-orange'>
+                        ₫{formatCurrency(purchase.product.price * purchase.buy_count)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className='hidden overflow-auto lg:block'>
               <div className='min-w-[1000px]'>
-                <div className='grid grid-cols-12 rounded-sm bg-white py-5 px-9 text-sm capitalize text-gray-500 shadow'>
+                <div className='grid grid-cols-12 rounded-lg bg-white py-5 px-6 text-sm capitalize text-gray-500 shadow-card md:px-9'>
                   <div className='col-span-6'>
                     <div className='flex items-center'>
                       <div className='flex flex-shrink-0 items-center justify-center pr-3'>
@@ -173,11 +247,11 @@ export default function Cart() {
                   </div>
                 </div>
                 {extendedPurchases.length > 0 && (
-                  <div className='my-3 rounded-sm bg-white p-5 shadow'>
+                  <div className='my-3 rounded-lg bg-white p-5 shadow-card'>
                     {extendedPurchases.map((purchase, index) => (
                       <div
                         key={purchase._id}
-                        className='mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white py-5 px-4 text-center text-sm text-gray-500 first:mt-0'
+                        className='mb-5 grid grid-cols-12 items-center rounded-lg border border-gray-200 bg-white py-5 px-4 text-center text-sm text-gray-500 first:mt-0 last:mb-0'
                       >
                         <div className='col-span-6'>
                           <div className='flex'>
@@ -266,7 +340,7 @@ export default function Cart() {
                 )}
               </div>
             </div>
-            <div className='sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100 bg-white p-5 shadow sm:flex-row sm:items-center'>
+            <div className='sticky bottom-0 z-10 mt-6 flex flex-col rounded-xl border border-neutral-200 bg-white p-4 shadow-card sm:p-5 md:mt-8 md:flex-row md:items-center'>
               <div className='flex items-center'>
                 <div className='flex flex-shrink-0 items-center justify-center pr-3'>
                   <input
@@ -296,7 +370,7 @@ export default function Cart() {
                   </div>
                 </div>
                 <Button
-                  className='mt-5 flex h-10 w-52 items-center justify-center bg-red-500 text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0'
+                  className='mt-5 flex h-10 w-full items-center justify-center bg-red-500 text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0 sm:w-52'
                   onClick={handleBuyPurchases}
                   disabled={buyProductsMutation.isPending}
                 >
@@ -306,13 +380,13 @@ export default function Cart() {
             </div>
           </>
         ) : (
-          <div className='text-center'>
-            <img src={noproduct} alt='no purchase' className='mx-auto h-24 w-24' />
-            <div className='mt-5 font-bold text-gray-400'>Giỏ hàng của bạn còn trống</div>
-            <div className='mt-5 text-center'>
+          <div className='rounded-2xl border border-dashed border-neutral-200 bg-white px-6 py-16 text-center shadow-card'>
+            <img src={noproduct} alt='no purchase' className='mx-auto h-28 w-28 opacity-90' />
+            <div className='mt-6 font-semibold text-neutral-500'>Giỏ hàng của bạn còn trống</div>
+            <div className='mt-8'>
               <Link
                 to={path.home}
-                className=' rounded-sm bg-orange px-10 py-2  uppercase text-white transition-all hover:bg-orange/80'
+                className='inline-flex min-w-[12rem] items-center justify-center rounded-lg bg-orange px-8 py-3 text-sm font-medium uppercase text-white transition-colors hover:bg-orange/90'
               >
                 Mua ngay
               </Link>

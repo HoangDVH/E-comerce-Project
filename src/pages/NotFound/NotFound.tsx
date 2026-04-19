@@ -2,20 +2,20 @@ import { Link } from 'react-router-dom'
 
 export default function NotFound() {
   return (
-    <main className='flex h-screen w-full flex-col items-center justify-center'>
-      <h1 className='text-9xl font-extrabold tracking-widest text-gray-900'>404</h1>
-      <div className='absolute rotate-12 rounded bg-orange px-2 text-sm text-white'>Page Not Found</div>
-      <button className='mt-5'>
-        <Link
-          to='/'
-          className='active:text-orange-500 group relative inline-block text-sm font-medium text-white focus:outline-none focus:ring'
-        >
-          <span className='absolute inset-0 translate-x-0.5 translate-y-0.5 bg-orange transition-transform group-hover:translate-y-0 group-hover:translate-x-0' />
-          <span className='relative block border border-current px-8 py-3'>
-            <span>Go Home</span>
-          </span>
-        </Link>
-      </button>
+    <main className='flex min-h-[70vh] w-full flex-col items-center justify-center bg-neutral-50 px-4 py-16'>
+      <div className='relative text-center'>
+        <h1 className='text-7xl font-extrabold tracking-widest text-neutral-800 sm:text-9xl'>404</h1>
+        <div className='absolute -right-2 top-0 rotate-12 rounded-md bg-orange px-3 py-1 text-xs font-medium text-white shadow sm:text-sm'>
+          Không tìm thấy trang
+        </div>
+      </div>
+      <p className='mt-6 max-w-md text-center text-neutral-600'>Trang bạn tìm không tồn tại hoặc đã được chuyển đi.</p>
+      <Link
+        to='/'
+        className='mt-8 inline-flex min-w-[10rem] items-center justify-center rounded-lg bg-orange px-8 py-3 text-sm font-medium text-white shadow-card transition-colors hover:bg-orange/90'
+      >
+        Về trang chủ
+      </Link>
     </main>
   )
 }
