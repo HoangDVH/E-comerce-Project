@@ -32,7 +32,7 @@ export default function DateSelect({ value, onChange, errorMessage }: Props) {
       [name]: Number(valueFromSelect)
     }
     setDate(newDate)
-    onChange && onChange(new Date(newDate.year, newDate.month, newDate.date))
+    onChange?.(new Date(newDate.year, newDate.month, newDate.date))
   }
 
   return (

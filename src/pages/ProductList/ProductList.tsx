@@ -10,6 +10,7 @@ import { ProductListConfig } from 'src/types/product.type'
 import AsideFilter from './components/AsideFilter'
 import CategoryStrip from './components/CategoryStrip/CategoryStrip'
 import Product from './components/Product/Product'
+import ProductListSkeleton, { CategoryStripSkeleton } from './components/ProductListSkeleton'
 import SortProductList from './components/SortProductList'
 
 export default function ProductList() {
@@ -22,6 +23,10 @@ export default function ProductList() {
   }, [location.search])
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.search])
+
+  useEffect(() => {
     if (!filterOpen) return
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -30,7 +35,7 @@ export default function ProductList() {
     }
   }, [filterOpen])
 
-  const { data: productsData } = useQuery({
+  const { data: productsData, isPending: isProductsPending } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => {
       return productApi.getProducts(queryConfig as ProductListConfig)
@@ -39,7 +44,7 @@ export default function ProductList() {
     staleTime: 3 * 60 * 1000
   })
 
-  const { data: categoriesData } = useQuery({
+  const { data: categoriesData, isPending: isCategoriesPending } = useQuery({
     queryKey: ['categories'],
     queryFn: () => {
       return categoryApi.getCategories()
@@ -47,26 +52,29 @@ export default function ProductList() {
   })
 
   const categories = categoriesData?.data.data || []
+  const isListLoading = isProductsPending || isCategoriesPending
 
   return (
     <div className='bg-[#fafafa] pb-4 pt-0 lg:bg-neutral-100 lg:py-6'>
       <Helmet>
-        <title>Trang chủ | Shopee Clone</title>
-        <meta name='description' content='Trang chủ dự án Shopee Clone' />
+        <title>Trang chủ | UniMart</title>
+        <meta name='description' content='Trang chủ UniMart — cửa hàng điện tử demo' />
       </Helmet>
 
-      {productsData && categories.length > 0 && (
+      {isListLoading && <CategoryStripSkeleton className='lg:hidden' />}
+
+      {!isListLoading && productsData && categories.length > 0 && (
         <CategoryStrip categories={categories} queryConfig={queryConfig} className='lg:hidden' />
       )}
 
       <div className='container pt-3 lg:pt-0'>
-        {productsData && (
+        {isListLoading && <ProductListSkeleton />}
+
+        {!isListLoading && productsData && (
           <>
             <div className='grid grid-cols-12 items-start gap-4 lg:gap-6'>
-              <aside className='hidden lg:col-span-3 lg:block lg:sticky lg:top-20 lg:self-start'>
-                <div className='rounded-xl border border-neutral-100 bg-white p-4 shadow-card lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none'>
-                  <AsideFilter queryConfig={queryConfig} categories={categories} />
-                </div>
+              <aside className='hidden lg:col-span-3 lg:block'>
+                <AsideFilter queryConfig={queryConfig} categories={categories} />
               </aside>
 
               <div className='col-span-12 min-w-0 lg:col-span-9'>
@@ -83,15 +91,33 @@ export default function ProductList() {
 
                 <SortProductList queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
 
-                <div className='mt-2 grid grid-cols-2 gap-1 sm:gap-2 md:grid-cols-3 lg:mt-4 lg:grid-cols-4 xl:grid-cols-5'>
-                  {productsData.data.data.products.map((product) => (
-                    <div className='col-span-1' key={product._id}>
-                      <Product product={product} />
+                {productsData.data.data.products.length === 0 ? (
+                  <div className='mt-4 rounded-xl border border-neutral-100 bg-white py-16 text-center shadow-card'>
+                    <div className='mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-neutral-100 text-neutral-400'>
+                      <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1} stroke='currentColor' className='h-12 w-12'>
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z'
+                        />
+                      </svg>
                     </div>
-                  ))}
-                </div>
+                    <p className='text-base font-medium text-neutral-800'>Không có sản phẩm</p>
+                    <p className='mt-2 px-6 text-sm text-neutral-500'>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className='mt-2 grid grid-cols-2 gap-1 sm:gap-2 md:grid-cols-3 lg:mt-4 lg:grid-cols-4 xl:grid-cols-5'>
+                      {productsData.data.data.products.map((product) => (
+                        <div className='col-span-1' key={product._id}>
+                          <Product product={product} />
+                        </div>
+                      ))}
+                    </div>
 
-                <Pagination queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
+                    <Pagination queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
+                  </>
+                )}
               </div>
             </div>
 

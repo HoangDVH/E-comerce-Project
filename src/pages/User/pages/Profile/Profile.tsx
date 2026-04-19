@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
 import { useForm, Controller, FormProvider, useFormContext } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -73,6 +73,7 @@ const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birt
 
 export default function Profile() {
   const { setProfile } = useContext(AppContext)
+  const queryClient = useQueryClient()
   const [file, setFile] = useState<File>()
 
   const previewImage = useMemo(() => {
@@ -139,7 +140,8 @@ export default function Profile() {
       })
       setProfile(res.data.data)
       setProfileToLS(res.data.data)
-      // refetch()
+      await queryClient.invalidateQueries({ queryKey: ['profile'] })
+      setFile(undefined)
       toast.success(res.data.message)
     } catch (error) {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormDataError>>(error)) {

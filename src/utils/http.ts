@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosInstance } from 'axios'
+import axios, { AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { toast } from 'react-toastify'
 import { AuthResponse, RefreshTokenReponse } from 'src/types/auth.type'
@@ -41,7 +41,17 @@ export class Http {
       }
     })
     this.instance.interceptors.request.use(
-      (config) => {
+      (config: InternalAxiosRequestConfig) => {
+        // Mặc định Content-Type: application/json khiến axios stringify FormData → upload ảnh hỏng.
+        // Bỏ header để trình duyệt gửi multipart/form-data kèm boundary.
+        if (typeof FormData !== 'undefined' && config.data instanceof FormData && config.headers) {
+          const headers = config.headers
+          if (typeof headers.delete === 'function') {
+            headers.delete('Content-Type')
+          } else {
+            delete (headers as Record<string, unknown>)['Content-Type']
+          }
+        }
         if (this.accessToken && config.headers) {
           config.headers.authorization = this.accessToken
           return config

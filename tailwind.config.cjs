@@ -10,7 +10,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        orange: '#ee4d2d'
+        /** Màu chủ đạo kiểu TMĐT (xanh tin cậy); giữ key `orange` để không đổi class toàn project */
+        orange: '#2563eb'
       },
       boxShadow: {
         card: '0 1px 2px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.06)',

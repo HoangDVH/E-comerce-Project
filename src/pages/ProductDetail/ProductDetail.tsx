@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import purchaseApi from 'src/apis/purchase.api'
@@ -11,7 +11,10 @@ import { purchasesStatus } from 'src/constants/purchase'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
 import Product from '../ProductList/components/Product'
+import ProductDetailSkeleton from './ProductDetailSkeleton'
+import { ProductCardSkeleton } from '../ProductList/components/ProductListSkeleton'
 import path from 'src/constants/path'
+import { AppContext } from 'src/contexts/app.context'
 import { useTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet-async'
 import { convert } from 'html-to-text'
@@ -19,10 +22,11 @@ import { convert } from 'html-to-text'
 export default function ProductDetail() {
   const { t } = useTranslation(['product'])
   const queryClient = useQueryClient()
+  const { isAuthenticated } = useContext(AppContext)
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
-  const { data: productDetailData } = useQuery({
+  const { data: productDetailData, isPending: isProductPending } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
   })
@@ -36,7 +40,7 @@ export default function ProductDetail() {
   )
   const queryConfig: ProductListConfig = { limit: '20', page: '1', category: product?.category._id }
 
-  const { data: productsData } = useQuery({
+  const { data: productsData, isPending: isRelatedProductsPending } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => {
       return productApi.getProducts(queryConfig)
@@ -99,7 +103,17 @@ export default function ProductDetail() {
     setBuyCount(value)
   }
 
+  const requireLoginForPurchase = () => {
+    if (!isAuthenticated) {
+      toast.warning('Bạn phải đăng nhập để thực hiện chức năng này')
+      navigate(path.login)
+      return false
+    }
+    return true
+  }
+
   const addToCart = () => {
+    if (!requireLoginForPurchase()) return
     addToCartMutation.mutate(
       { buy_count: buyCount, product_id: product?._id as string },
       {
@@ -112,6 +126,7 @@ export default function ProductDetail() {
   }
 
   const buyNow = async () => {
+    if (!requireLoginForPurchase()) return
     const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
     const purchase = res.data.data
     navigate(path.cart, {
@@ -121,11 +136,18 @@ export default function ProductDetail() {
     })
   }
 
-  if (!product) return null
+  if (isProductPending) {
+    return <ProductDetailSkeleton />
+  }
+
+  if (!product) {
+    return null
+  }
+
   return (
     <div className='bg-neutral-100 py-4 md:py-6'>
       <Helmet>
-        <title>{product.name} | Shopee Clone</title>
+        <title>{product.name} | UniMart</title>
         <meta
           name='description'
           content={convert(product.description, {
@@ -295,7 +317,14 @@ export default function ProductDetail() {
       <div className='mt-8'>
         <div className='container'>
           <div className='text-sm font-medium uppercase tracking-wide text-neutral-500'>CÓ THỂ BẠN CŨNG THÍCH</div>
-          {productsData && (
+          {isRelatedProductsPending && (
+            <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
+            </div>
+          )}
+          {productsData && !isRelatedProductsPending && (
             <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
               {productsData.data.data.products.map((product) => (
                 <div className='col-span-1' key={product._id}>

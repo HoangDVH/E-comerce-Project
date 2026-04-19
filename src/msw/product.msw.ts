@@ -247,7 +247,7 @@ const productsRequest = http.get(`${config.baseUrl}products`, () => {
   })
 })
 
-const productDetailRequest = http.get(`${config.baseUrl}products/:id`, ({ params }) => {
+const productDetailRequest = http.get(`${config.baseUrl}products/:id`, () => {
   // nếu muốn dùng id:
   // const { id } = params
 

@@ -72,10 +72,10 @@ export default function Register() {
   })
 
   return (
-    <div className='min-h-[calc(100vh-0px)] bg-[linear-gradient(165deg,#f53d2d_0%,#ff7337_45%,#fff5f3_45%,#fafafa_100%)]'>
+    <div className='min-h-[calc(100vh-0px)] bg-[linear-gradient(165deg,#1e40af_0%,#3b82f6_45%,#eff6ff_45%,#fafafa_100%)]'>
       <Helmet>
-        <title>Đăng ký | Shopee Clone</title>
-        <meta name='description' content='Đăng ký tài khoản vào dự án Shopee Clone' />
+        <title>Đăng ký | UniMart</title>
+        <meta name='description' content='Đăng ký tài khoản UniMart' />
       </Helmet>
       <div className='container'>
         <div className='grid grid-cols-1 py-10 sm:py-14 lg:grid-cols-5 lg:py-28 lg:pr-10'>
@@ -118,7 +118,7 @@ export default function Register() {
 
               <div className='mt-2'>
                 <Button
-                  className='flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
+                  className='flex w-full items-center justify-center bg-orange py-4 px-2 text-sm uppercase text-white hover:bg-orange/90'
                   isLoading={registerAccountMutation.isPending}
                   disabled={registerAccountMutation.isPending}
                 >
@@ -127,7 +127,7 @@ export default function Register() {
               </div>
               <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-400'>Bạn đã có tài khoản?</span>
-                <Link className='ml-1 text-red-400' to='/login'>
+                <Link className='ml-1 font-medium text-orange hover:text-orange/90' to='/login'>
                   Đăng nhập
                 </Link>
               </div>

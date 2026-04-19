@@ -1,6 +1,7 @@
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constants/path'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 
 /**
  * index 0: Có 5 cái màu vàng tương ứng từ indexStar 0 - 4 đều màu vang
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function RatingStars({ queryConfig }: Props) {
+  const { t } = useTranslation('home')
   const navigate = useNavigate()
 
   const handleFilterStar = (ratingFilter: number) => {
@@ -30,17 +32,22 @@ export default function RatingStars({ queryConfig }: Props) {
   }
 
   return (
-    <ul className='my-3'>
+    <ul className='mt-3 space-y-1'>
       {Array(5)
         .fill(0)
         .map((_, index) => (
-          <li className='py-1 pl-2' key={index}>
+          <li key={index}>
             <div
-              className='flex cursor-pointer items-center text-sm'
+              className='flex cursor-pointer items-center rounded-lg border border-transparent px-2 py-2 text-sm transition hover:border-neutral-200 hover:bg-white'
               onClick={() => handleFilterStar(5 - index)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  handleFilterStar(5 - index)
+                }
+              }}
               tabIndex={0}
               role='button'
-              aria-hidden='true'
             >
               {Array(5)
                 .fill(0)
@@ -92,7 +99,7 @@ export default function RatingStars({ queryConfig }: Props) {
                     </svg>
                   )
                 })}
-              {index !== 0 && <span>Trở lên</span>}
+              {index !== 0 && <span className='ml-1 text-neutral-600'>{t('aside filter.and up')}</span>}
             </div>
           </li>
         ))}

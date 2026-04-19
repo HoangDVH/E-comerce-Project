@@ -35,7 +35,7 @@ function InputV2<
       // Gọi field.onChange để cập nhật vào state React Hook Form
       field.onChange(event)
       // Thực thi onChange callback từ bên ngoài truyền vào props
-      onChange && onChange(event)
+      onChange?.(event)
     }
   }
 

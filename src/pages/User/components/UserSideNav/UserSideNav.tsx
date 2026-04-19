@@ -9,13 +9,15 @@ export default function UserSideNav() {
   const { profile } = useContext(AppContext)
 
   return (
-    <div className='rounded-xl border border-neutral-200 bg-white shadow-card md:sticky md:top-20 md:self-start'>
-      <div className='flex items-center border-b border-neutral-200 px-4 py-4'>
+    <div className='min-w-0 max-w-full rounded-xl border border-neutral-200 bg-white shadow-card md:sticky md:top-20 md:self-start'>
+      <div className='flex min-w-0 items-center border-b border-neutral-200 px-4 py-4'>
         <Link to={path.profile} className='h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10'>
           <img src={getAvatarUrl(profile?.avatar)} alt='' className='h-full w-full object-cover' />
         </Link>
-        <div className='flex-grow pl-4'>
-          <div className='mb-1 truncate font-semibold text-gray-600'>{profile?.email}</div>
+        <div className='min-w-0 flex-1 pl-4'>
+          <div className='mb-1 truncate font-semibold text-gray-600' title={profile?.email}>
+            {profile?.email}
+          </div>
           <Link to={path.profile} className='flex items-center capitalize text-gray-500'>
             <svg
               width={12}

@@ -15,11 +15,9 @@ const userApi = {
     return http.put<SuccessResponse<User>>('user', body)
   },
   uploadAvatar(body: FormData) {
-    return http.post<SuccessResponse<string>>('user/upload-avatar', body, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    // Không set Content-Type thủ công: axios/browser sẽ gửi multipart kèm boundary đúng.
+    // Gửi `multipart/form-data` không có boundary khiến server không đọc được file.
+    return http.post<SuccessResponse<string>>('user/upload-avatar', body)
   }
 }
 

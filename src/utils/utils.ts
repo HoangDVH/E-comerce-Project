@@ -5,7 +5,6 @@ import userImage from 'src/assets/images/user.svg'
 import { ErrorResponse } from 'src/types/utils.type'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
-  // eslint-disable-next-line import/no-named-as-default-member
   return axios.isAxiosError(error)
 }
 
@@ -39,6 +38,15 @@ export function formatNumberToSocialStyle(value: number) {
 }
 
 export const rateSale = (original: number, sale: number) => Math.round(((original - sale) / original) * 100) + '%'
+
+/** Chuẩn hóa từ khóa tìm kiếm: chữ thường, bỏ dấu tiếng Việt (đ→d). */
+export function normalizeVietnameseForSearch(input: string): string {
+  if (!input) return ''
+  let s = String(input).trim().toLowerCase()
+  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  s = s.replace(/đ/g, 'd')
+  return s.replace(/\s+/g, ' ').trim()
+}
 
 const removeSpecialCharacter = (str: string) =>
   // eslint-disable-next-line no-useless-escape

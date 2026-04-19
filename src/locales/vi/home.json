@@ -1,6 +1,13 @@
 {
   "aside filter": {
     "all categories": "Tất cả danh mục",
-    "filter search": "Bộ lọc tìm kiếm"
+    "filter search": "Bộ lọc tìm kiếm",
+    "price range": "Khoảng giá",
+    "price from": "₫ TỪ",
+    "price to": "₫ ĐẾN",
+    "apply": "Áp dụng",
+    "rating": "Đánh giá",
+    "clear all": "Xóa tất cả",
+    "and up": "Trở lên"
   }
 }

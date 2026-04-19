@@ -28,7 +28,7 @@ export default function QuantityController({
     } else if (_value < 1) {
       _value = 1
     }
-    onType && onType(_value)
+    onType?.(_value)
     setLocalValue(_value)
   }
 
@@ -37,7 +37,7 @@ export default function QuantityController({
     if (max !== undefined && _value > max) {
       _value = max
     }
-    onIncrease && onIncrease(_value)
+    onIncrease?.(_value)
     setLocalValue(_value)
   }
 
@@ -46,12 +46,12 @@ export default function QuantityController({
     if (_value < 1) {
       _value = 1
     }
-    onDecrease && onDecrease(_value)
+    onDecrease?.(_value)
     setLocalValue(_value)
   }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-    onFocusOut && onFocusOut(Number(event.target.value))
+    onFocusOut?.(Number(event.target.value))
   }
 
   return (
