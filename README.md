@@ -168,6 +168,4 @@ React 18, TypeScript, Vite 5, React Router 6, TanStack Query 5, Axios, React Hoo
 
 ---
 
-## License / nguồn
 
-Dự án học tập / portfolio; fork từ bài toán clone Shopee — điều chỉnh mô tả và link repo nếu bạn fork riêng.
