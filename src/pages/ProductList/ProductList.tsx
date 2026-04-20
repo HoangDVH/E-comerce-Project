@@ -12,6 +12,7 @@ import CategoryStrip from './components/CategoryStrip/CategoryStrip'
 import Product from './components/Product/Product'
 import ProductListSkeleton, { CategoryStripSkeleton } from './components/ProductListSkeleton'
 import SortProductList from './components/SortProductList'
+import ActivePriceFilterBanner from './components/ActivePriceFilterBanner'
 
 export default function ProductList() {
   const location = useLocation()
@@ -73,7 +74,7 @@ export default function ProductList() {
         {!isListLoading && productsData && (
           <>
             <div className='grid grid-cols-12 items-start gap-4 lg:gap-6'>
-              <aside className='hidden lg:col-span-3 lg:block'>
+              <aside className='hidden min-w-0 lg:col-span-3 lg:block'>
                 <AsideFilter queryConfig={queryConfig} categories={categories} />
               </aside>
 
@@ -90,6 +91,8 @@ export default function ProductList() {
                 </button>
 
                 <SortProductList queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
+
+                <ActivePriceFilterBanner queryConfig={queryConfig} />
 
                 {productsData.data.data.products.length === 0 ? (
                   <div className='mt-4 rounded-xl border border-neutral-100 bg-white py-16 text-center shadow-card'>

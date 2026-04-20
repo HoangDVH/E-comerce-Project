@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 import { sortBy, order as orderConstant } from 'src/constants/product'
 import { ProductListConfig } from 'src/types/product.type'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function SortProductList({ queryConfig, pageSize }: Props) {
+  const { t } = useTranslation('home')
+
   const page = Number(queryConfig.page)
   const { sort_by = sortBy.createdAt, order } = queryConfig
   const navigate = useNavigate()
@@ -58,18 +61,18 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
     <div className='rounded-none bg-white shadow-sm ring-1 ring-black/[0.04] lg:rounded-lg lg:bg-white/90 lg:shadow-card lg:backdrop-blur-sm lg:ring-black/5'>
       <div className='flex flex-wrap items-center justify-between gap-y-3 py-2.5 px-2 lg:flex-nowrap lg:justify-between lg:gap-3 lg:py-4 lg:px-3'>
         <div className='flex max-w-full flex-1 items-center gap-2 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-wrap lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden'>
-          <span className='hidden shrink-0 text-sm text-neutral-600 lg:inline'>Sắp xếp theo</span>
+          <span className='hidden shrink-0 text-sm text-neutral-600 lg:inline'>{t('sort bar.sort by')}</span>
           <button
             className={btn(isActiveSortBy(sortBy.view))}
             onClick={() => handleSort(sortBy.view)}
           >
-            Phổ biến
+            {t('sort bar.popular')}
           </button>
           <button className={btn(isActiveSortBy(sortBy.createdAt))} onClick={() => handleSort(sortBy.createdAt)}>
-            Mới nhất
+            {t('sort bar.newest')}
           </button>
           <button className={btn(isActiveSortBy(sortBy.sold))} onClick={() => handleSort(sortBy.sold)}>
-            Bán chạy
+            {t('sort bar.best selling')}
           </button>
           <select
             className={classNames(
@@ -83,13 +86,13 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             onChange={(event) => handlePriceOrder(event.target.value as Exclude<ProductListConfig['order'], undefined>)}
           >
             <option value='' disabled className='bg-white text-black'>
-              Giá
+              {t('sort bar.price')}
             </option>
             <option value={orderConstant.asc} className='bg-white text-black'>
-              Giá: Thấp đến cao
+              {t('sort bar.price low to high')}
             </option>
             <option value={orderConstant.desc} className='bg-white text-black'>
-              Giá: Cao đến thấp
+              {t('sort bar.price high to low')}
             </option>
           </select>
         </div>

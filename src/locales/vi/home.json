@@ -1,13 +1,36 @@
 {
+  "sort bar": {
+    "sort by": "Sắp xếp theo",
+    "popular": "Phổ biến",
+    "newest": "Mới nhất",
+    "best selling": "Bán chạy",
+    "price": "Giá",
+    "price low to high": "Giá: Thấp đến cao",
+    "price high to low": "Giá: Cao đến thấp"
+  },
   "aside filter": {
     "all categories": "Tất cả danh mục",
     "filter search": "Bộ lọc tìm kiếm",
     "price range": "Khoảng giá",
+    "price title": "Giá",
     "price from": "₫ TỪ",
     "price to": "₫ ĐẾN",
     "apply": "Áp dụng",
     "rating": "Đánh giá",
     "clear all": "Xóa tất cả",
-    "and up": "Trở lên"
+    "and up": "Trở lên",
+    "price slider hint": "Hoặc chọn mức giá phù hợp với bạn",
+    "banner title": "Đang lọc giá:",
+    "banner range": "{{min}} – {{max}}",
+    "banner under": "Dưới {{price}}",
+    "banner over": "Từ {{price}} trở lên",
+    "banner clear": "Hủy lọc giá",
+    "presets": {
+      "under-100k": "Dưới 100 nghìn",
+      "100k-500k": "Từ 100 - 500 nghìn",
+      "500k-1m": "Từ 500 - 1 triệu",
+      "1m-2m": "Từ 1 - 2 triệu",
+      "over-2m": "Trên 2 triệu"
+    }
   }
 }

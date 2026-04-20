@@ -1,13 +1,36 @@
 {
+  "sort bar": {
+    "sort by": "Sort by",
+    "popular": "Popular",
+    "newest": "Newest",
+    "best selling": "Best selling",
+    "price": "Price",
+    "price low to high": "Price: Low to high",
+    "price high to low": "Price: High to low"
+  },
   "aside filter": {
     "all categories": "All categories",
     "filter search": "Search filters",
     "price range": "Price range",
+    "price title": "Price",
     "price from": "₫ MIN",
     "price to": "₫ MAX",
     "apply": "Apply",
     "rating": "Rating",
     "clear all": "Clear all",
-    "and up": "& up"
+    "and up": "& up",
+    "price slider hint": "Or pick a price range that suits you",
+    "banner title": "Price filter:",
+    "banner range": "{{min}} – {{max}}",
+    "banner under": "Under {{price}}",
+    "banner over": "{{price}} and up",
+    "banner clear": "Clear price filter",
+    "presets": {
+      "under-100k": "Under ₫100k",
+      "100k-500k": "₫100k – ₫500k",
+      "500k-1m": "₫500k – ₫1m",
+      "1m-2m": "₫1m – ₫2m",
+      "over-2m": "Over ₫2m"
+    }
   }
 }

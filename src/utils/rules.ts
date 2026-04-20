@@ -59,6 +59,7 @@ export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
 
 function testPriceMinMax(this: yup.TestContext<yup.AnyObject>) {
   const { price_max, price_min } = this.parent as { price_min: string; price_max: string }
+  if (price_min === '' && price_max === '') return true
   if (price_min !== '' && price_max !== '') {
     return Number(price_max) >= Number(price_min)
   }
