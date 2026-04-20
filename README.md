@@ -1,6 +1,6 @@
-# UniMart / Shopee Clone (React)
+# UniMart
 
-Ứng dụng thương mại điện tử phía client (clone phong cách Shopee), xây bằng **React 18 + TypeScript + Vite**. Dữ liệu lấy từ **REST API** công khai; giao diện có **i18n** (Việt / Anh), lọc & sắp xếp sản phẩm, giỏ hàng và khu vực tài khoản người dùng.
+Ứng dụng thương mại điện tử phía client, xây bằng **React 18 + TypeScript + Vite**. Dữ liệu lấy từ **REST API** công khai; giao diện có **i18n** (Việt / Anh), lọc & sắp xếp sản phẩm, giỏ hàng và khu vực tài khoản người dùng.
 
 ---
 
